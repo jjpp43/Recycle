@@ -15,12 +15,14 @@ const client = new Client({
 client.connect();
 //---------------------Connect to database----------------------------
 
-//Load everything that's beneath public folder as static files
-app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs'); 
+app.set('views', __dirname + '/views');         //랜더링할 파일이 있는 디렉토리 
+//Load everything that's beneath public folder as static files
+//디자인 파일이 위치할 정적 요소들을 저장하는 디렉토리
+app.use(express.static(__dirname + '/public')); 
 
 app.get('/', function(req, res) {
-    res.render(path.join(__dirname + 'index'))
+    res.render('index')
 });
 
 app.post('/', function(req, res) {
