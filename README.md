@@ -4,7 +4,7 @@ This website is for my own local business.
 Neighbors can request a recycling service via this <a href="recycling-service.herokuapp.com">website</a>
 The customer may enter their 
 1. Name 2. Phone number 3. Address and save it to postgresql database.
-Next, by using toast api, we send a text message to out customer.
+Next, by using toast api, we send a text message to out customer.<br>
 
 분리수거 
 **KOR**
