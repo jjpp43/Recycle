@@ -21,25 +21,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
     </head>
     <body id="page-top">
-        <!-- Navigation-->
-        <!--
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">분리수거 대행</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        -->
         <!-- Masthead-->
         <header class="masthead">
             <div class="container d-flex h-100 align-items-center">
@@ -62,7 +43,6 @@
                         </p>
                     </div>
                 </div>
-                <!--<img class="img-fluid" src="assets/img/nature-smaller.jpg" alt="" />-->
             </div>
         </section>
         <!-- Projects-->
@@ -87,23 +67,6 @@
                         </figure>    
                     </div>
                 </div>
-                <!-- Project Two Row-->
-                <!--
-                <div class="row justify-content-center no-gutters">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="" /></div>
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Mountains</h4>
-                                    <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well, try this theme on a small screen!</p>
-                                    <hr class="d-none d-lg-block mb-0 mr-0" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
             </div>
         </section>
         <!-- Signup-->
@@ -114,10 +77,28 @@
                         <i class="far fa-paper-plane fa-2x mb-2 request"></i>
                         <h2 class="request mb-5">문의를 위해 아래 폼을 작성해주시기 바랍니다</h2>
                         <form class="form-inline d-flex">
-                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="clientName" type="text" placeholder="성함" pattern="[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,3,4}"><br><br>
-                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="clientNumber" type="tel" placeholder="번호 : 010-XXXX-XXXX" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"><br><br>
-                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="clientAddress" type="text" placeholder="주소 : XXX(동)-XXXX(호)" pattern="[0-9]{3}-[0-9]{3,4}"><br><br>
-                            <button class="btn btn-primary mx-auto" type="submit">문의신청</button>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" 
+                                id="clientName" 
+                                type="text" 
+                                placeholder="성함" 
+                                pattern="[A-Z]{2,3,4}"
+                                required
+                            /><br><br>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" 
+                                id="clientNumber" 
+                                type="tel" 
+                                placeholder="번호 : 010-XXXX-XXXX" 
+                                pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                                required
+                            /><br><br>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" 
+                                id="clientAddress" 
+                                type="text" 
+                                placeholder="주소 : XXX(동)-XXXX(호)" 
+                                pattern="[0-9]{3}-[0-9]{3,4}"
+                                required
+                            /><br><br>
+                            <button class="btn btn-primary mx-auto" id="submit-btn" type="submit">문의신청</button>
                         </form>
                     </div>
                 </div>
@@ -159,5 +140,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            $("#submit-btn").click(function () {
+            //Send data to index.ejs post router
+            var clientName = $("#clientName").val();
+            var clientNumber = $("#clientNumber").val();
+            var clientAddress = $("#clientAddress").val();
+            $.ajax({
+                url: '/',
+                type: "POST",
+                async: false,
+                data : {
+                    clientName : clientName,
+                    clientNumber : clientNumber,
+                    clientAddress : clientAddress,
+                },
+                success: function(returns) {
+                    if(returns == "1") {
+                        alert('문의신청이 완료되었습니다! 잠시후 문자메세지가 전송될 예정입니다');
+                        window.location.href = "/";
+                    }
+                },
+            })
+            });
+        </script>
     </body>
 </html>
