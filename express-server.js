@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
+const xss = require('xss');
 
 //---------------------Connect to database----------------------------
 const { Client } = require('pg');
@@ -31,17 +32,32 @@ app.get('/', function(req, res) {
 
 //Post request to database
 app.post('/', function(req, res) {
-    var clientname = req.body.clientName ;
-    var clientnumber = req.body.clientNumber;
-    var clientaddress = req.body.clientAddress;
-    console.log(req.body);
-    console.log(clientname);
-    console.log(clientnumber);
-    console.log(clientaddress);
+    var clientname = xss(req.body.clientName, {
+        whiteList: [],
+        stripIgnoreTag: true,
+        stripIgnoreTagBody: ['script']
+    });
+    var clientnumber = xss(req.body.clientNumber, {
+        whiteList: [],
+        stripIgnoreTag: true,
+        stripIgnoreTagBody: ['script']
+    });
+    var clientaddress = xss(req.body.clientAddress, {
+        whiteList: [],
+        stripIgnoreTag: true,
+        stripIgnoreTagBody: ['script']
+    });
+    
+    console.log("new name" + clientname);
+    console.log("new name" + clientnumber);
+    console.log("new Address" + clientaddress);
+    
+
     var sqlQuery = `INSERT INTO client.client(client_name, client_number, client_address) VALUES($1,$2,$3)`;
     var data = ['{'+clientname+'}', '{'+clientnumber+'}', '{'+clientaddress+'}'];
+    //Always avoid string concatination inside the query text directly
     client.query(sqlQuery, data)
-        .then(result => console.log(result))
+        .then(/*result => console.log(result)*/)
         .catch(e => console.error(e.stack))
         .then(() => {
             res.status(200).json("1");
