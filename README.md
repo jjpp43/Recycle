@@ -13,7 +13,7 @@ Next, by using toast api, we send a text message to our customer.<br><br>
 1. 고객의 이름 
 2. 고객의 전화번호 
 3. 고객의 집주소를 입력받아 postgresql DB에 저장합니다.
-고객에게 문자메세지를 toast api를 사용하여 보냅니다.
+고객에게 문자메세지api를 사용하여 보냅니다.
 
 # Description
 It is aimed for mobile users:iphone: Since the only way to access this website is by scanning QR code.
