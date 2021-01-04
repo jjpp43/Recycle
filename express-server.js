@@ -30,7 +30,7 @@ app.get('/', function(req, res) {
     res.render('index')
 });
 
-//Post request to database
+//Send client's name, client's phone number, and client's address to the database
 app.post('/', function(req, res) {
     var clientname = xss(req.body.clientName, {
         whiteList: [],
@@ -49,7 +49,7 @@ app.post('/', function(req, res) {
     });
     
     console.log("new name" + clientname);
-    console.log("new name" + clientnumber);
+    console.log("new number" + clientnumber);
     console.log("new Address" + clientaddress);
     
 
