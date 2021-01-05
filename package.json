@@ -1,18 +1,24 @@
 {
   "name": "recycling",
   "version": "1.0.0",
-  "description": "",
   "main": "express-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node express-server.js"
   },
+  "engines": {
+    "node": "12.2.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "json": "^10.0.0",
     "path": "^0.12.7",
-    "pg": "^8.5.1"
-  }
+    "pg": "^8.5.1",
+    "xss": "^1.0.8"
+  },
+  "description": ""
 }
