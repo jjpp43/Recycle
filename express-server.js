@@ -26,6 +26,7 @@ app.set('views', __dirname + '/views');         //랜더링할 파일이 있는 
 //디자인 파일이 위치할 정적 요소들을 저장하는 디렉토리
 app.use(express.static(__dirname + '/public')); 
 
+//data disclosure 방지
 app.get('/', function(req, res) {
     res.render('index')
 });
@@ -51,7 +52,6 @@ app.post('/', function(req, res) {
     console.log("new name" + clientname);
     console.log("new number" + clientnumber);
     console.log("new Address" + clientaddress);
-    
 
     var sqlQuery = `INSERT INTO client.client(client_name, client_number, client_address) VALUES($1,$2,$3)`;
     var data = ['{'+clientname+'}', '{'+clientnumber+'}', '{'+clientaddress+'}'];
@@ -68,5 +68,5 @@ app.post('/', function(req, res) {
 
 
 app.listen(port, function() {
-    console.log('Server running on port 3000');
+    console.log("Server running");
 });
