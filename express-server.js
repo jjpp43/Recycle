@@ -57,7 +57,7 @@ app.post('/', function(req, res) {
     var data = ['{'+clientname+'}', '{'+clientnumber+'}', '{'+clientaddress+'}'];
     //Always avoid string concatination inside the query text directly
     client.query(sqlQuery, data)
-        .then(/*result => console.log(result)*/)
+        .then(result => console.log(result))
         .catch(e => console.error(e.stack))
         .then(() => {
             res.status(200).json("1");
