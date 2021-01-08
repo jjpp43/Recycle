@@ -33,28 +33,31 @@ app.get('/', function(req, res) {
 
 //Send client's name, client's phone number, and client's address to the database
 app.post('/', function(req, res) {
-    var clientname = xss(req.body.clientName, {
+    const xssOptions = {
         whiteList: [],
         stripIgnoreTag: true,
-        stripIgnoreTagBody: ['script']
-    });
-    var clientnumber = xss(req.body.clientNumber, {
-        whiteList: [],
-        stripIgnoreTag: true,
-        stripIgnoreTagBody: ['script']
-    });
-    var clientaddress = xss(req.body.clientAddress, {
-        whiteList: [],
-        stripIgnoreTag: true,
-        stripIgnoreTagBody: ['script']
-    });
+        stripIgnoreTagBody: [
+          "script"
+        ]
+      },
+      myXSSObjects = Object.fromEntries([
+          "clientName",
+          "clientNumber",
+          "clientAddress"
+        ].map((property) => [
+          property,
+          xss(req.body[property], xssOptions)
+        ]));
     
-    console.log("new name" + clientname);
-    console.log("new number" + clientnumber);
-    console.log("new Address" + clientaddress);
+    const clientName = myXSSObjects.clientName;
+    const clientNumber = myXSSObjects.clientNumber;
+    const clientAddress = myXSSObjects.clientAddress;
+    console.log(clientName);
+    console.log(clientNumber);
+    console.log(clientAddress);
 
-    var sqlQuery = `INSERT INTO client.client(client_name, client_number, client_address) VALUES($1,$2,$3)`;
-    var data = ['{'+clientname+'}', '{'+clientnumber+'}', '{'+clientaddress+'}'];
+    const sqlQuery = `INSERT INTO client.client(client_name, client_number, client_address) VALUES($1,$2,$3)`;
+    const data = ['{'+clientName+'}', '{'+clientNumber+'}', '{'+clientAddress+'}'];
     //Always avoid string concatination inside the query text directly
     client.query(sqlQuery, data)
         .then(result => console.log(result))
